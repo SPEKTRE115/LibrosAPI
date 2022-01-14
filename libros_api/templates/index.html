@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% extends 'base.html' %}
+
+    {% block titulo %}Página principal{% endblock titulo %}
+
+
+    {% block contenido %}
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+      <!-- Navbar -->
+      <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+        <div class="container-fluid py-1 px-3">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+              <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Páginas</a></li>
+              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Página principal</li>
+            </ol>
+            <h4 class="font-weight-bolder mb-0">API Libros</h4>
+          </nav>
+          <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+              
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+  
+      <br>
+
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <a href="{% url 'lista de libros' %}">
+              <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">book</i>
+              </div>
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize"> libros del catálogo</p>
+                <br>
+                <h4 class="mb-0">Libros</h4>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-3">
+              <p class="mb-1">Libros registrados: <span class="text-success text-sm font-weight-bolder">{{libros}} </span> </p>
+            </div>
+          </a>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+              <a href="{% url 'lista de autores' %}">
+              <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">person</i>
+              </div>
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">autores de los libros registrados</p>
+                <br>
+                <h4 class="mb-0">Autores</h4>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-3">
+                <p class="mb-1">Autores registrados: <span class="text-success text-sm font-weight-bolder">{{autores}} </span> </p>
+            </div>
+          </a>
+          </div>
+        </div>
+        <div class="col-xl-3 col-sm-6">
+            <div class="card">
+              <div class="card-header p-3 pt-2">
+                <a href="{% url 'lista de editoriales' %}">
+                <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                  <i class="material-icons opacity-10">edit</i>
+                </div>
+                <div class="text-end pt-1">
+                  <p class="text-sm mb-0 text-capitalize"> editoriales registradas</p>
+                  <br>
+                  <h4 class="mb-0">Editoriales</h4>
+                </div>
+              </div>
+              <hr class="dark horizontal my-0">
+              <div class="card-footer p-3">
+                  <p class="mb-1">Editoriales registradas: <span class="text-success text-sm font-weight-bolder">{{editoriales}} </span> </p>
+              </div>
+            </a>
+            </div>
+          </div>
+        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+          <div class="card">
+            <div class="card-header p-3 pt-2">
+            <a href="{% url 'lista de generos' %}">
+              <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                <i class="material-icons opacity-10">category</i>
+              </div>
+              <div class="text-end pt-1">
+                <p class="text-sm mb-0 text-capitalize">géneros literarios</p>
+                <br>
+                <h4 class="mb-0">Géneros</h4>
+              </div>
+            </div>
+            <hr class="dark horizontal my-0">
+            <div class="card-footer p-3">
+                <p class="mb-1">Géneros registrados: <span class="text-success text-sm font-weight-bolder">{{generos}} </span> </p>
+            </div>
+          </a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+      <div class="container-fluid py-4">
+        <br>
+      </div>
+    {% endblock contenido %}

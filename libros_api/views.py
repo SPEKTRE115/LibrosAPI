@@ -5,17 +5,53 @@ from .models import Libro
 from .models import Autor
 from .models import Genero
 from .models import Editorial
-from .serializers import LibroSerializer
+from .serializers import LibroSerializer, GeneroSerializer, AutorSerializer
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.shortcuts import render
 
 ######################################################
 # Vistas de la API                                   #
 ######################################################
 
+#Vista de la pagina principal de la API
+class Principal(View):
+    def get(self,request):
+        #Número de libros
+        listaLibros = Libro.objects.all()
+        numeroLibros = 0
+        for libro in listaLibros:
+            numeroLibros=numeroLibros+1
+
+        #Número de autores
+        listaAutores= Autor.objects.all()
+        numeroAutores = 0
+        for autor in listaAutores:
+            numeroAutores=numeroAutores+1
+
+        #Número de editoriales
+        listaEditoriales = Editorial.objects.all()
+        numeroEditoriales= 0
+        for editorial in listaEditoriales:
+            numeroEditoriales=numeroEditoriales+1
+
+        #Número de géneros
+        listaGeneros = Genero.objects.all()
+        numeroGeneros = 0
+        for genero in listaGeneros:
+            numeroGeneros=numeroGeneros+1
+
+        #envío de contadores    
+        return render(request,'index.html',
+            {'libros': numeroLibros,
+            'autores': numeroAutores,
+            'editoriales': numeroEditoriales,
+            'generos': numeroGeneros}
+        )
+    
 
 
 #Vista de la lista de todos los libros
@@ -30,16 +66,16 @@ class LibroListView(View):
         else:
             listaLibros = Libro.objects.all()
 
-        listaLibrosSerial = LibroSerializer(listaLibros, many=True).data
+        listaAutores=Libro.objects.all()
 
-        return JsonResponse(list(listaLibrosSerial), safe=False)
+
+        #listaLibrosSerial = LibroSerializer(listaLibros, many=True).data
+
+        return render(request,'libros_list.html',{'libros':listaLibros})
 
     #MÉTODO POST
     def post(self,request, *args, **kwargs):
         jasonData = json.loads(request.body)
-
-        #autoresData = Autor.objects.get(pk=jasonData['autores']) 
-        #generosData=Genero.objects.get(pk=jasonData['generos'])
 
         libroNuevo = Libro.objects.create(
         titulo=jasonData['titulo'],
@@ -48,8 +84,6 @@ class LibroListView(View):
         editorial=Editorial.objects.get(pk =jasonData['editorial']),
         )
         
-        #libroNuevo.autores.add(autoresData)
-        #libroNuevo.generos.add(generosData)
         listaGeneros=jasonData['generos']
         
         for genero in listaGeneros:
@@ -79,9 +113,8 @@ class LibroDetailView(View):
     #MÉTODO GET PK
     def get(self,request, pk):
         libro =  Libro.objects.filter(pk=pk)
-        listaLibrosSerial = LibroSerializer(libro, many=True).data
-        return JsonResponse(list(listaLibrosSerial), safe=False)
-
+        #listaLibrosSerial = LibroSerializer(libro, many=True).data
+        return render(request,'libros_list.html',{'libros':libro})
     #MÉTODO PUT
     def put(self,request, pk):
         jasonData = json.loads(request.body)
@@ -137,7 +170,7 @@ class AutorListView(View):
         else:
             listaAutores = Autor.objects.all()
 
-        return JsonResponse(list(listaAutores.values()), safe=False)
+        return render(request,'autores_list.html',{'autores':listaAutores})
 
     #MÉTODO POST
     def post(self,request):
@@ -161,8 +194,8 @@ class AutorListView(View):
 class AutorDetailView(View):
     #MÉTODO GET PK
     def get(self,request, pk):
-        listaAutores = Autor.objects.get(pk=pk)
-        return JsonResponse(model_to_dict(listaAutores))
+        listaAutores = Autor.objects.filter(pk=pk)
+        return render(request,'autores_list.html',{'autores':listaAutores})
 
     #MÉTODO PUT
     def put(self,request, pk):
@@ -198,7 +231,7 @@ class GeneroListView(View):
         else:
             listaGeneros = Genero.objects.all()
 
-        return JsonResponse(list(listaGeneros.values()), safe=False)
+        return render(request,'generos_list.html',{'generos':listaGeneros})
 
     #MÉTODO POST
     def post(self,request):
@@ -217,8 +250,8 @@ class GeneroListView(View):
 class GeneroDetailView(View):
     #MÉTODO GET PK
     def get(self,request, pk):
-        listaGeneros = Genero.objects.get(pk=pk)
-        return JsonResponse(model_to_dict(listaGeneros))
+        listaGeneros = Genero.objects.filter(pk=pk)
+        return render(request,'generos_list.html',{'generos':listaGeneros})
 
     #MÉTODO PUT
     def put(self,request, pk):
@@ -250,7 +283,7 @@ class EditorialListView(View):
         else:
             listaEditoriales = Editorial.objects.all()
 
-        return JsonResponse(list(listaEditoriales.values()), safe=False)
+        return render(request,'editoriales_list.html',{'editoriales':listaEditoriales})
 
     #MÉTODO POST
     def post(self,request):
@@ -269,8 +302,8 @@ class EditorialListView(View):
 class EditorialDetailView(View):
     #MÉTODO GET PK
     def get(self,request, pk):
-        listaEditoriales = Editorial.objects.get(pk=pk)
-        return JsonResponse(model_to_dict(listaEditoriales))
+        listaEditoriales = Editorial.objects.filter(pk=pk)
+        return render(request,'editoriales_list.html',{'editoriales':listaEditoriales})
 
     #MÉTODO PUT
     def put(self,request, pk):
