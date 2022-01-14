@@ -51,23 +51,18 @@ class LibroListView(View):
         #libroNuevo.autores.add(autoresData)
         #libroNuevo.generos.add(generosData)
         listaGeneros=jasonData['generos']
-        generosData=NULL
+        
+        for genero in listaGeneros:
+            libroNuevo.generos.add(genero)
 
-
-        if ((type(listaGeneros) is int)):
-            generosData=Genero.objects.get(pk=jasonData['generos'])
-            libroNuevo.generos.add(generosData)
-        else:
-            for genero in listaGeneros:
-                libroNuevo.generos.add(genero)
+        libroNuevo.save()
 
         listaAutores=jasonData['autores']
-        if ((type(listaAutores) is int)):
-            autoresData = Autor.objects.get(pk=jasonData['autores'])
-            libroNuevo.generos.add(generosData)
-        else:
-            for autor in listaAutores:
-                libroNuevo.generos.add(autor)
+
+        for autor in listaAutores:
+            libroNuevo.autores.add(autor)
+        
+        libroNuevo.save()
 
         datos={'message':"Libro creado correctamente!"}
         return JsonResponse(datos)
@@ -92,11 +87,26 @@ class LibroDetailView(View):
         jasonData = json.loads(request.body)
         libro = Libro.objects.get(pk=pk)
         libro.titulo=jasonData['titulo']
-        libro.autor=jasonData['autores']
+        #libro.autor=jasonData['autores']
         libro.numeroPaginas=jasonData['numeroPaginas']
         libro.fechaPublicacion=jasonData['fechaPublicacion']
-        libro.editorial=jasonData['editorial']
-        libro.generos=jasonData['generos']
+        libro.editorial=Editorial.objects.get(pk =jasonData['editorial'])
+        #libro.generos=jasonData['generos']
+
+        listaGeneros=jasonData['generos']
+        
+        for genero in listaGeneros:
+            libro.generos.add(genero)
+
+        libro.save()
+
+        listaAutores=jasonData['autores']
+
+        for autor in listaAutores:
+            libro.autores.add(autor)
+        
+        libro.save()
+
         datos={'message':"Libro actualizado correctamente!"}
         return JsonResponse(datos)
 
